@@ -1,0 +1,5 @@
+include 'SimpleBank'
+findProject(':SimpleBank')?.name = 'simplebank'
+include 'ProcessingCenter'
+findProject(':ProcessingCenter')?.name = 'processingcenter'
+
