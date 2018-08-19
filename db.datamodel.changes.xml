@@ -1,0 +1,25 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="Ilya Afanasyev (manual)" id="Create Master Database">
+        <createTable tableName="ACCOUNT">
+            <column autoIncrement="true" name="ID" type="BIGINT(19)">
+                <constraints primaryKey="true" primaryKeyName="CONSTRAINT_ACCOUNT_PK"/>
+            </column>
+            <column name="IBAN" type="VARCHAR(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VALUE" type="DECIMAL(20, 2)" defaultValue="0.00">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LAST_UPDATE_DATETIME" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createIndex indexName="INDEX_IBAN" schemaName="public" tableName="ACCOUNT" unique="true">
+            <column name="IBAN" type="VARCHAR(128)"/>
+        </createIndex>
+        <addUniqueConstraint columnNames="IBAN" constraintName="ACCOUNT_PK" tableName="ACCOUNT"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,48 @@
+group 'processing'
+version ''
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+task fatJar(type: Jar) {
+    gradle.taskGraph.whenReady { taskGraph ->
+        manifest {
+            attributes 'Implementation-Title': 'Processing Center',
+                    'Implementation-Version': version,
+                    'Main-Class': 'processing.ProcessingCenter',
+                    'Implementation-Date': new Date().toString(),
+                    'SVN-Revision': '1'
+        }
+        from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+        with jar
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+build.finalizedBy(fatJar)
+
+dependencies {
+    compile(
+            'org.apache.logging.log4j:log4j-slf4j-impl:2.10.0',
+            'io.vertx:vertx-core:3.5.1',
+            'io.vertx:vertx-web:3.5.1',
+            'com.h2database:h2:1.4.196',
+            'org.apache.activemq:activemq-all:5.15.3',
+            'com.atomikos:transactions-jta:4.0.6',
+            'com.atomikos:transactions-jdbc:4.0.6',
+            'org.liquibase:liquibase-core:3.5.3',
+
+            'io.rest-assured:json-path:3.1.0',
+            'io.rest-assured:xml-path:3.1.0',
+
+    )
+    testCompile (
+            'io.rest-assured:rest-assured:3.1.0',
+            'io.rest-assured:json-schema-validator:3.1.0',
+            'junit:junit:4.12',
+    )
+}

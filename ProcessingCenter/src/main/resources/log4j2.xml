@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="ConsoleAppender">
+            <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss,SSS} [%t] %-5p %c %x - %m%n %ex{full}" />
+        </Console>
+        <RollingFile name="RollingFileAppender" fileName="${ctx:ProcessingCenter.logs}" filePattern="${ctx:ProcessingCenter.logs}.log.%i" append="true">
+            <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss,SSS} [%t] %-5p %c %x - %m%n %ex{full}" />
+            <Policies>
+                <SizeBasedTriggeringPolicy size="20MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="5" />
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="ConsoleAppender" />
+            <AppenderRef ref="RollingFileAppender" />
+        </Root>
+    </Loggers>
+</Configuration>
